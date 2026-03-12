@@ -1,25 +1,11 @@
-package lesson2.music.app;
+import lesson2.music.model.*;
+import lesson2.music.service.MusicService;
+import lesson2.music.service.PaymentService;
+import lesson2.music.service.StreamingStatistics;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import lesson2.music.model.Album;
-import lesson2.music.model.Artist;
-import lesson2.music.model.Genre;
-import lesson2.music.model.Library;
-import lesson2.music.model.Media;
-import lesson2.music.model.Notification;
-import lesson2.music.model.Playlist;
-import lesson2.music.model.Podcast;
-import lesson2.music.model.PremiumUser;
-import lesson2.music.model.Review;
-import lesson2.music.model.Song;
-import lesson2.music.model.Subscription;
-import lesson2.music.model.User;
-import lesson2.music.service.MusicService;
-import lesson2.music.service.PaymentService;
-import lesson2.music.service.StreamingStatistics;
 
 /**
  * Entry point of the Music Streaming Service application.
@@ -42,14 +28,14 @@ public class AppRunner {
         Album album = new Album("After Hours", LocalDate.of(2020, 3, 20), artist);
         album.addSong(song1);
         album.addSong(song2);
-        artist.setAlbums(new Album[] { album });
+        artist.setAlbums(new Album[]{album});
 
-        Artist[] artists = { artist };
+        Artist[] artists = {artist};
 
         // ---------- 2. Catalog: media from artists' albums + other media ----------
 
         Podcast podcast1 = new Podcast("Tech Talks", 1800, "John Doe", 5);
-        Media[] catalog = { song1, song2, podcast1 };
+        Media[] catalog = {song1, song2, podcast1};
 
         // ---------- 3. Users with their library, playlists, reviews, notifications ----------
 
@@ -61,20 +47,20 @@ public class AppRunner {
         library.addMedia(podcast1);
         user.setLibrary(library);
 
-        Media[] playlistItems = { song1, song2 };
+        Media[] playlistItems = {song1, song2};
         Playlist playlist = new Playlist("My Playlist", playlistItems);
-        user.setPlaylists(new Playlist[] { playlist });
+        user.setPlaylists(new Playlist[]{playlist});
         System.out.println("Playlist duration: " + playlist.calculateTotalDuration() + " sec");
 
         Review review = new Review(user, song1, 5, "Amazing song!", LocalDateTime.now());
-        user.setReviews(new Review[] { review });
+        user.setReviews(new Review[]{review});
         review.printReview();
 
         Notification notification = new Notification(user, "New album released!", "INFO");
-        user.setNotifications(new Notification[] { notification });
+        user.setNotifications(new Notification[]{notification});
         notification.send();
 
-        User[] users = { user };
+        User[] users = {user};
 
         // ---------- 4. Root: MusicService with full hierarchy ----------
 
@@ -90,9 +76,14 @@ public class AppRunner {
 
         // ---------- 5. Access hierarchy from root: library, album info ----------
 
-        musicService.getUsers()[0].getLibrary().printLibrary();
-
-        musicService.getArtists()[0].getAlbums()[0].printAlbumInfo();
+        for (User u : musicService.getUsers()) {
+            u.getLibrary().printLibrary();
+        }
+        for (Artist a : musicService.getArtists()) {
+            for (Album alb : a.getAlbums()) {
+                alb.printAlbumInfo();
+            }
+        }
 
         // ---------- 6. Dynamic add (still only arrays) ----------
 

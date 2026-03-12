@@ -72,9 +72,7 @@ public class MusicService {
      */
     public void addArtist(Artist newArtist) {
         Artist[] newArtists = new Artist[artists.length + 1];
-        for (int i = 0; i < artists.length; i++) {
-            newArtists[i] = artists[i];
-        }
+        System.arraycopy(artists, 0, newArtists, 0, artists.length);
         newArtists[artists.length] = newArtist;
         artists = newArtists;
     }
@@ -88,9 +86,7 @@ public class MusicService {
 
         User[] newUsers = new User[users.length + 1];
 
-        for (int i = 0; i < users.length; i++) {
-            newUsers[i] = users[i];
-        }
+        System.arraycopy(users, 0, newUsers, 0, users.length);
 
         newUsers[users.length] = newUser;
 
@@ -105,9 +101,7 @@ public class MusicService {
 
         Media[] newCatalog = new Media[catalog.length + 1];
 
-        for (int i = 0; i < catalog.length; i++) {
-            newCatalog[i] = catalog[i];
-        }
+        System.arraycopy(catalog, 0, newCatalog, 0, catalog.length);
 
         newCatalog[catalog.length] = newMedia;
 

@@ -40,9 +40,7 @@ public class Library {
 
         Media[] newMedia = new Media[mediaItems.length + 1];
 
-        for (int i = 0; i < mediaItems.length; i++) {
-            newMedia[i] = mediaItems[i];
-        }
+        System.arraycopy(mediaItems, 0, newMedia, 0, mediaItems.length);
 
         newMedia[mediaItems.length] = media;
 

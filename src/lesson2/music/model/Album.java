@@ -55,9 +55,7 @@ public class Album {
      */
     public void addSong(Song song) {
         Song[] newSongs = new Song[songs.length + 1];
-        for (int i = 0; i < songs.length; i++) {
-            newSongs[i] = songs[i];
-        }
+        System.arraycopy(songs, 0, newSongs, 0, songs.length);
         newSongs[songs.length] = song;
         songs = newSongs;
     }
