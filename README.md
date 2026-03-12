@@ -1,1 +1,1 @@
-# Music Streaming Service - Version 1
+# Music Streaming Service
