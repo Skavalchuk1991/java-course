@@ -1,5 +1,6 @@
 package lesson2.music.service;
 
+import lesson2.music.model.Artist;
 import lesson2.music.model.Media;
 import lesson2.music.model.User;
 
@@ -7,6 +8,9 @@ import lesson2.music.model.User;
  * Core service of the music streaming system
  */
 public class MusicService {
+
+    // Catalog of artists in the service
+    private Artist[] artists;
 
     // Catalog of available media (Songs and Podcasts)
     private Media[] catalog;
@@ -18,6 +22,7 @@ public class MusicService {
      * Constructor
      */
     public MusicService(Media[] catalog, User[] users) {
+        this.artists = new Artist[0];
         this.catalog = catalog;
         this.users = users;
     }
@@ -37,6 +42,10 @@ public class MusicService {
         StreamingStatistics.increaseCounter();
     }
 
+    public Artist[] getArtists() {
+        return artists;
+    }
+
     public Media[] getCatalog() {
         return catalog;
     }
@@ -45,12 +54,29 @@ public class MusicService {
         return users;
     }
 
+    public void setArtists(Artist[] artists) {
+        this.artists = artists;
+    }
+
     public void setCatalog(Media[] catalog) {
         this.catalog = catalog;
     }
 
     public void setUsers(User[] users) {
         this.users = users;
+    }
+
+    /**
+     * Adds new artist to the service.
+     * Creates a new array and copies existing artists into it.
+     */
+    public void addArtist(Artist newArtist) {
+        Artist[] newArtists = new Artist[artists.length + 1];
+        for (int i = 0; i < artists.length; i++) {
+            newArtists[i] = artists[i];
+        }
+        newArtists[artists.length] = newArtist;
+        artists = newArtists;
     }
 
     /**

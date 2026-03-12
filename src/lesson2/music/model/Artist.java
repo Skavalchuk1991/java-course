@@ -15,6 +15,9 @@ public class Artist {
     // Year when artist started career
     private int debutYear;
 
+    // Artist's albums
+    private Album[] albums;
+
     /**
      * Constructor to initialize artist fields
      */
@@ -22,6 +25,7 @@ public class Artist {
         this.name = name;
         this.country = country;
         this.debutYear = debutYear;
+        this.albums = new Album[0];
     }
 
     // ----------- Getters -----------
@@ -38,6 +42,10 @@ public class Artist {
         return debutYear;
     }
 
+    public Album[] getAlbums() {
+        return albums;
+    }
+
     // ----------- Setters -----------
 
     public void setName(String name) {
@@ -50,6 +58,10 @@ public class Artist {
 
     public void setDebutYear(int debutYear) {
         this.debutYear = debutYear;
+    }
+
+    public void setAlbums(Album[] albums) {
+        this.albums = albums;
     }
 
     /**
