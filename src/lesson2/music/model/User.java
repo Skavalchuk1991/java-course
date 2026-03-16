@@ -1,9 +1,11 @@
 package lesson2.music.model;
 
+import java.util.Objects;
+
 /**
  * Represents a system user
  */
-public class User {
+public class User extends BaseEntity {
 
     // Username of the user
     private String username;
@@ -29,7 +31,8 @@ public class User {
     /**
      * Constructor to initialize user
      */
-    public User(String username, String email, Subscription subscription) {
+    public User(int id, String username, String email, Subscription subscription) {
+        super(id);
         this.username = username;
         this.email = email;
         this.subscription = subscription;
@@ -96,5 +99,23 @@ public class User {
 
     public void setNotifications(Notification[] notifications) {
         this.notifications = notifications;
+    }
+
+    @Override
+    public String toString() {
+        return "User{id=" + id + ", username='" + username + "', email='" + email + "'}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username);
     }
 }

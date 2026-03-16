@@ -20,6 +20,11 @@ public class Podcast extends Media {
         this.episodeNumber = episodeNumber;
     }
 
+    @Override
+    public String getMediaInfo() {
+        return "Podcast: " + title + " | Host: " + host + " | Episode: " + episodeNumber;
+    }
+
     // -------- Getters --------
 
     public String getHost() {

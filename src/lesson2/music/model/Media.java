@@ -7,10 +7,10 @@ package lesson2.music.model;
 public abstract class Media {
 
     // Title of media (name of song or podcast)
-    private String title;
+    protected String title;
 
     // Duration in seconds
-    private int duration;
+    protected int duration;
 
     // Static block – runs once when class is loaded
     static {
@@ -24,6 +24,11 @@ public abstract class Media {
         this.title = title;
         this.duration = duration;
     }
+
+    /**
+     * Returns a string representation of this media (subclass-specific).
+     */
+    public abstract String getMediaInfo();
 
     /**
      * Business method – simulate playing media

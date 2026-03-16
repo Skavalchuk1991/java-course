@@ -40,7 +40,7 @@ public class AppRunner {
         // ---------- 3. Users with their library, playlists, reviews, notifications ----------
 
         Subscription premium = new Subscription("Premium", new BigDecimal("9.99"));
-        PremiumUser user = new PremiumUser("sergey", "sergey@mail.com", premium, 3);
+        PremiumUser user = new PremiumUser(1, "sergey", "sergey@mail.com", premium, 3);
 
         Library library = new Library(user);
         library.addMedia(song1);
@@ -74,6 +74,21 @@ public class AppRunner {
         paymentService.processPayment(premium.getMonthlyPrice());
         System.out.println("Total streams: " + StreamingStatistics.getTotalStreams());
 
+        // Polymorphism: same method, different result for Song vs Podcast
+        musicService.printMediaInfo(song1);
+        musicService.printMediaInfo(podcast1);
+
+        // Polymorphism via field: Media reference holds different subtypes
+        musicService.setFeaturedMedia(song1);
+        System.out.println("Featured: " + musicService.getFeaturedMedia().getMediaInfo());
+        musicService.setFeaturedMedia(podcast1);
+        System.out.println("Featured: " + musicService.getFeaturedMedia().getMediaInfo());
+
+        // toString / equals / hashCode demo
+        System.out.println(user.toString());
+        System.out.println(song1.toString());
+        System.out.println("song1.equals(song2): " + song1.equals(song2));
+
         // ---------- 5. Access hierarchy from root: library, album info ----------
 
         for (User u : musicService.getUsers()) {
@@ -88,7 +103,7 @@ public class AppRunner {
         // ---------- 6. Dynamic add (still only arrays) ----------
 
         Subscription basic = new Subscription("Basic", new BigDecimal("4.99"));
-        User newUser = new User("alex", "alex@mail.com", basic);
+        User newUser = new User(2, "alex", "alex@mail.com", basic);
         Library newUserLibrary = new Library(newUser);
         newUser.setLibrary(newUserLibrary);
         musicService.addUser(newUser);

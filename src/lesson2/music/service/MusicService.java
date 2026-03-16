@@ -18,6 +18,9 @@ public class MusicService {
     // Registered users
     private User[] users;
 
+    // Field with supertype — can hold any Media subtype (polymorphism)
+    private Media featuredMedia;
+
     /**
      * Constructor
      */
@@ -52,6 +55,22 @@ public class MusicService {
 
     public User[] getUsers() {
         return users;
+    }
+
+    public Media getFeaturedMedia() {
+        return featuredMedia;
+    }
+
+    public void setFeaturedMedia(Media featuredMedia) {
+        this.featuredMedia = featuredMedia;
+    }
+
+    /**
+     * Demonstrates polymorphism: works with any Media subtype.
+     * Calls overridden getMediaInfo() — different result for Song vs Podcast.
+     */
+    public void printMediaInfo(Media media) {
+        System.out.println(media.getMediaInfo());
     }
 
     public void setArtists(Artist[] artists) {

@@ -13,8 +13,8 @@ public class PremiumUser extends User {
      * Constructor for PremiumUser
      * Calls parent constructor using super()
      */
-    public PremiumUser(String username, String email, Subscription subscription, int downloadLimit) {
-        super(username, email, subscription); // calling constructor of User
+    public PremiumUser(int id, String username, String email, Subscription subscription, int downloadLimit) {
+        super(id, username, email, subscription);
         this.downloadLimit = downloadLimit;
     }
 
@@ -36,5 +36,10 @@ public class PremiumUser extends User {
 
     public void setDownloadLimit(int downloadLimit) {
         this.downloadLimit = downloadLimit;
+    }
+
+    @Override
+    public String toString() {
+        return "PremiumUser{id=" + id + ", username='" + getUsername() + "', downloadLimit=" + downloadLimit + "}";
     }
 }

@@ -1,6 +1,7 @@
 package lesson2.music.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Represents user subscription plan
@@ -39,5 +40,23 @@ public class Subscription {
 
     public void setMonthlyPrice(BigDecimal monthlyPrice) {
         this.monthlyPrice = monthlyPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Subscription{type='" + type + "', monthlyPrice=" + monthlyPrice + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subscription that = (Subscription) o;
+        return Objects.equals(type, that.type) && Objects.equals(monthlyPrice, that.monthlyPrice);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, monthlyPrice);
     }
 }
