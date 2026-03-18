@@ -14,8 +14,8 @@ public class Podcast extends Media {
     /**
      * Constructor for Podcast
      */
-    public Podcast(String title, int duration, String host, int episodeNumber) {
-        super(title, duration);
+    public Podcast(int id, String title, int duration, String host, int episodeNumber) {
+        super(id, title, duration);
         this.host = host;
         this.episodeNumber = episodeNumber;
     }
@@ -23,6 +23,11 @@ public class Podcast extends Media {
     @Override
     public String getMediaInfo() {
         return "Podcast: " + title + " | Host: " + host + " | Episode: " + episodeNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Podcast{title='" + title + "', host='" + host + "', episode=" + episodeNumber + "}";
     }
 
     // -------- Getters --------

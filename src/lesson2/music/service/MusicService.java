@@ -2,12 +2,23 @@ package lesson2.music.service;
 
 import lesson2.music.model.Artist;
 import lesson2.music.model.Media;
+import lesson2.music.model.Playable;
+import lesson2.music.model.Shareable;
 import lesson2.music.model.User;
 
 /**
  * Core service of the music streaming system
  */
 public class MusicService {
+
+    // Static variable — shared across all instances
+    private static int totalRegisteredUsers = 0;
+
+    // Static block — runs once when class is loaded
+    static {
+        System.out.println("MusicService class initialized");
+        totalRegisteredUsers = 0;
+    }
 
     // Catalog of artists in the service
     private Artist[] artists;
@@ -28,6 +39,12 @@ public class MusicService {
         this.artists = new Artist[0];
         this.catalog = catalog;
         this.users = users;
+        totalRegisteredUsers = users.length;
+    }
+
+    // Static method
+    public static int getTotalRegisteredUsers() {
+        return totalRegisteredUsers;
     }
 
     /**
@@ -73,6 +90,24 @@ public class MusicService {
         System.out.println(media.getMediaInfo());
     }
 
+    /**
+     * Polymorphism via interface:
+     * Works with any object that implements Playable — Song, Podcast, etc.
+     */
+    public void playItem(Playable item) {
+        System.out.println("Duration: " + item.getDuration() + " sec");
+        item.play();
+    }
+
+    /**
+     * Polymorphism via interface:
+     * Works with any object that implements Shareable.
+     */
+    public void shareItem(Shareable item, User recipient) {
+        System.out.println("Share link: " + item.getShareLink());
+        item.share(recipient);
+    }
+
     public void setArtists(Artist[] artists) {
         this.artists = artists;
     }
@@ -102,14 +137,11 @@ public class MusicService {
      * and copy existing users into it.
      */
     public void addUser(User newUser) {
-
         User[] newUsers = new User[users.length + 1];
-
         System.arraycopy(users, 0, newUsers, 0, users.length);
-
         newUsers[users.length] = newUser;
-
         users = newUsers;
+        totalRegisteredUsers++;
     }
 
     /**

@@ -6,7 +6,7 @@ import java.time.LocalDate;
  * Represents a music album.
  * Album belongs to an Artist and contains songs.
  */
-public class Album {
+public class Album implements Reviewable {
 
     // Album title
     private String title;
@@ -20,6 +20,8 @@ public class Album {
     // Array of songs in this album
     private Song[] songs;
 
+    private Review[] reviews = new Review[0];
+
     /**
      * Constructor to initialize album fields
      */
@@ -28,6 +30,28 @@ public class Album {
         this.releaseDate = releaseDate;
         this.artist = artist;
         this.songs = new Song[0];
+    }
+
+    @Override
+    public void addReview(Review review) {
+        Review[] newReviews = new Review[reviews.length + 1];
+        System.arraycopy(reviews, 0, newReviews, 0, reviews.length);
+        newReviews[reviews.length] = review;
+        reviews = newReviews;
+    }
+
+    @Override
+    public double getAverageRating() {
+        if (reviews.length == 0) return 0.0;
+        int total = 0;
+        for (Review r : reviews) {
+            total += r.getRating();
+        }
+        return (double) total / reviews.length;
+    }
+
+    public Review[] getReviews() {
+        return reviews;
     }
 
     // ---------- Getters ----------

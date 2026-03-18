@@ -4,7 +4,7 @@ package lesson2.music.model;
  * Abstract base class that represents any playable media
  * (Song, Podcast, etc.)
  */
-public abstract class Media {
+public abstract class Media extends BaseEntity implements Playable {
 
     // Title of media (name of song or podcast)
     protected String title;
@@ -20,7 +20,8 @@ public abstract class Media {
     /**
      * Constructor to initialize media fields
      */
-    public Media(String title, int duration) {
+    public Media(int id, String title, int duration) {
+        super(id);
         this.title = title;
         this.duration = duration;
     }
@@ -33,6 +34,7 @@ public abstract class Media {
     /**
      * Business method – simulate playing media
      */
+    @Override
     public void play() {
         System.out.println("Playing: " + title);
     }
@@ -43,6 +45,7 @@ public abstract class Media {
         return title;
     }
 
+    @Override
     public int getDuration() {
         return duration;
     }

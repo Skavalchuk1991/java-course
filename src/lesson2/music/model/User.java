@@ -51,6 +51,14 @@ public class User extends BaseEntity {
         return email;
     }
 
+    /**
+     * Final method — cannot be overridden in subclasses.
+     * Returns a formatted display name for the user.
+     */
+    public final String getDisplayName() {
+        return "[" + subscription.getType() + "] " + username;
+    }
+
     public Subscription getSubscription() {
         return subscription;
     }
