@@ -198,12 +198,14 @@ public class AppRunner {
 
         System.out.println("\n===== HOMEWORK 5: EXCEPTIONS =====\n");
 
-        // --- 1. Checked exception: MediaLoadException (handled with try-catch) ---
+        // --- 1. Checked exception: MediaLoadException (handled with try-catch-finally) ---
         System.out.println("--- 1. Checked Exception: MediaLoadException ---");
         try {
             musicService.loadMediaFromSource("corrupted_file.mp3");
         } catch (MediaLoadException e) {
             System.out.println("Caught checked exception: " + e.getMessage());
+        } finally {
+            System.out.println("Finally block executed: cleanup after media load attempt");
         }
 
         // Also handle with try-catch using valid source
