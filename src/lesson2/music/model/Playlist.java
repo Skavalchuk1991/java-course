@@ -2,6 +2,8 @@ package lesson2.music.model;
 
 import lesson2.music.exception.PlaylistFullException;
 
+import java.util.List;
+
 /**
  * Represents a playlist that contains media items
  */
@@ -11,24 +13,21 @@ public class Playlist implements Shareable {
     private String name;
 
     // Playlist can contain different types of Media (Song, Podcast)
-    private Media[] items;
+    private List<Media> items;
 
     /**
      * Constructor
      */
-    public Playlist(String name, Media[] items) {
+    public Playlist(String name, List<Media> items) {
         this.name = name;
         this.items = items;
     }
 
     public void addItem(Media media) {
-        if (items.length >= AppConstants.MAX_PLAYLIST_SIZE) {
+        if (items.size() >= AppConstants.MAX_PLAYLIST_SIZE) {
             throw new PlaylistFullException("Playlist '" + name + "' is full. Max size: " + AppConstants.MAX_PLAYLIST_SIZE);
         }
-        Media[] newItems = new Media[items.length + 1];
-        System.arraycopy(items, 0, newItems, 0, items.length);
-        newItems[items.length] = media;
-        items = newItems;
+        items.add(media);
     }
 
     // -------- Shareable --------
@@ -63,7 +62,7 @@ public class Playlist implements Shareable {
         return name;
     }
 
-    public Media[] getItems() {
+    public List<Media> getItems() {
         return items;
     }
 
@@ -73,7 +72,7 @@ public class Playlist implements Shareable {
         this.name = name;
     }
 
-    public void setItems(Media[] items) {
+    public void setItems(List<Media> items) {
         this.items = items;
     }
 }

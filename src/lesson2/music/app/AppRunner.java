@@ -6,11 +6,16 @@ import lesson2.music.model.*;
 import lesson2.music.service.AudioStream;
 import lesson2.music.service.MusicService;
 import lesson2.music.service.PaymentService;
+import lesson2.music.service.RatingSystem;
 import lesson2.music.service.StreamingStatistics;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Entry point of the Music Streaming Service application.
@@ -33,14 +38,14 @@ public class AppRunner {
         Album album = new Album("After Hours", LocalDate.of(2020, 3, 20), artist);
         album.addSong(song1);
         album.addSong(song2);
-        artist.setAlbums(new Album[]{album});
+        artist.setAlbums(new ArrayList<>(List.of(album)));
 
-        Artist[] artists = {artist};
+        List<Artist> artists = new ArrayList<>(List.of(artist));
 
         // ---------- 2. Catalog: media from artists' albums + other media ----------
 
         Podcast podcast1 = new Podcast(3, "Tech Talks", 1800, "John Doe", 5);
-        Media[] catalog = {song1, song2, podcast1};
+        List<Media> catalog = new ArrayList<>(List.of(song1, song2, podcast1));
 
         // ---------- 3. Users with their library, playlists, reviews, notifications ----------
 
@@ -52,20 +57,20 @@ public class AppRunner {
         library.addMedia(podcast1);
         user.setLibrary(library);
 
-        Media[] playlistItems = {song1, song2};
+        List<Media> playlistItems = new ArrayList<>(List.of(song1, song2));
         Playlist playlist = new Playlist("My Playlist", playlistItems);
-        user.setPlaylists(new Playlist[]{playlist});
+        user.getPlaylists().add(playlist);
         System.out.println("Playlist duration: " + playlist.calculateTotalDuration() + " sec");
 
         Review review = new Review(user, song1, 5, "Amazing song!", LocalDateTime.now());
-        user.setReviews(new Review[]{review});
+        user.getReviews().add(review);
         review.printReview();
 
         Notification notification = new Notification(user, "New album released!", "INFO");
-        user.setNotifications(new Notification[]{notification});
+        user.getNotifications().add(notification);
         notification.send();
 
-        User[] users = {user};
+        List<User> users = new ArrayList<>(List.of(user));
 
         // ---------- 4. Root: MusicService with full hierarchy ----------
 
@@ -105,7 +110,7 @@ public class AppRunner {
             }
         }
 
-        // ---------- 6. Dynamic add (still only arrays) ----------
+        // ---------- 6. Dynamic add ----------
 
         Subscription basic = new Subscription("Basic", new BigDecimal("4.99"));
         User newUser = new User(2, "alex", "alex@mail.com", basic);
@@ -232,7 +237,7 @@ public class AppRunner {
         System.out.println("\n--- 3. Unchecked: PlaylistFullException ---");
         try {
             // Create a playlist and fill it to MAX_PLAYLIST_SIZE using addItem, then add one more
-            Playlist fullPlaylist = new Playlist("Full Playlist", new Media[0]);
+            Playlist fullPlaylist = new Playlist("Full Playlist", new ArrayList<>());
             for (int i = 0; i < AppConstants.MAX_PLAYLIST_SIZE; i++) {
                 fullPlaylist.addItem(song1);
             }
@@ -268,5 +273,129 @@ public class AppRunner {
         System.out.println("After try-with-resources block — stream was auto-closed");
 
         System.out.println("\n===== END OF HOMEWORK 5 =====");
+
+        // ============ HOMEWORK 6: Collections & Generics Demo ============
+
+        System.out.println("\n===== HOMEWORK 6: COLLECTIONS & GENERICS =====\n");
+
+        // --- 1. List: popular methods ---
+        System.out.println("--- 1. List operations ---");
+        List<Song> favoriteSongs = new ArrayList<>();
+        favoriteSongs.add(song1);
+        favoriteSongs.add(song2);
+        favoriteSongs.add(newSong);
+        System.out.println("Size: " + favoriteSongs.size());
+        System.out.println("Is empty: " + favoriteSongs.isEmpty());
+        System.out.println("First element (get): " + favoriteSongs.get(0));
+        System.out.println("Contains song1: " + favoriteSongs.contains(song1));
+        favoriteSongs.remove(newSong);
+        System.out.println("After remove, size: " + favoriteSongs.size());
+
+        // Iterate through List
+        System.out.println("Iterating List:");
+        for (Song s : favoriteSongs) {
+            System.out.println("  - " + s.getTitle());
+        }
+
+        // Retrieve first element from List
+        System.out.println("First from List: " + favoriteSongs.get(0));
+
+        // --- 2. Set: unique genres (custom class as value) ---
+        System.out.println("\n--- 2. Set operations (Genre as custom class) ---");
+        Genre rock = new Genre("Rock", "Rock music");
+        Genre jazz = new Genre("Jazz", "Jazz music");
+        Genre popDuplicate = new Genre("Pop", "Pop duplicate"); // same name as existing genre
+
+        musicService.addGenre(genre);       // Pop
+        musicService.addGenre(rock);        // Rock
+        musicService.addGenre(jazz);        // Jazz
+        musicService.addGenre(popDuplicate); // duplicate — should NOT be added
+
+        Set<Genre> genres = musicService.getGenres();
+        System.out.println("Genre set size (should be 3, not 4): " + genres.size());
+        System.out.println("Contains rock: " + genres.contains(rock));
+
+        // Iterate through Set
+        System.out.println("Iterating Set:");
+        for (Genre g : genres) {
+            System.out.println("  - " + g.getName());
+        }
+
+        // Retrieve first element from Set
+        Genre firstGenre = genres.iterator().next();
+        System.out.println("First from Set: " + firstGenre.getName());
+
+        // --- 3. Map: listening history (User as custom key) ---
+        System.out.println("\n--- 3. Map operations (User as custom key) ---");
+        // streamMedia already records listening history
+        musicService.streamMedia(user, song2);
+        musicService.streamMedia(user, podcast1);
+
+        Map<User, List<Media>> history = musicService.getListeningHistory();
+        System.out.println("History map size: " + history.size());
+        System.out.println("History is empty: " + history.isEmpty());
+
+        List<Media> userHistory = musicService.getUserHistory(user);
+        System.out.println("User '" + user.getUsername() + "' listened to " + userHistory.size() + " items");
+
+        // put — add history for newUser manually
+        history.put(newUser, new ArrayList<>(List.of(song1)));
+        System.out.println("After put, history map size: " + history.size());
+
+        // Iterate through Map (entrySet)
+        System.out.println("Iterating Map:");
+        for (Map.Entry<User, List<Media>> entry : history.entrySet()) {
+            System.out.println("  User: " + entry.getKey().getUsername() + " -> " + entry.getValue().size() + " tracks");
+        }
+
+        // Retrieve first element from Map
+        Map.Entry<User, List<Media>> firstEntry = history.entrySet().iterator().next();
+        System.out.println("First from Map: " + firstEntry.getKey().getUsername());
+
+        // --- 4. Generic classes ---
+        System.out.println("\n--- 4. Generic classes ---");
+
+        // Pair<Song, Integer> — song with play count
+        Pair<Song, Integer> topSong = new Pair<>(song1, 150);
+        System.out.println("Top song: " + topSong);
+
+        // Pair<User, Subscription> — user with their plan
+        Pair<User, Subscription> userPlan = new Pair<>(user, premium);
+        System.out.println("User plan: " + userPlan);
+
+        // RatingSystem<Song>
+        RatingSystem<Song> songRatings = new RatingSystem<>();
+        songRatings.addRating(song1, 5);
+        songRatings.addRating(song2, 4);
+        songRatings.addRating(newSong, 3);
+        System.out.println("Song ratings count: " + songRatings.size());
+        System.out.println("Average song rating: " + songRatings.getAverageRating());
+        System.out.println("Rating system empty: " + songRatings.isEmpty());
+
+        // RatingSystem<Podcast> — same generic class, different type
+        RatingSystem<Podcast> podcastRatings = new RatingSystem<>();
+        podcastRatings.addRating(podcast1, 5);
+        System.out.println("Podcast ratings count: " + podcastRatings.size());
+
+        // --- 5. Custom LinkedList ---
+        System.out.println("\n--- 5. Custom LinkedList ---");
+        CustomLinkedList<String> recentlyPlayed = new CustomLinkedList<>();
+        recentlyPlayed.add("Blinding Lights");
+        recentlyPlayed.add("Starboy");
+        recentlyPlayed.add("Tech Talks");
+        System.out.println("LinkedList size: " + recentlyPlayed.size());
+        System.out.println("Is empty: " + recentlyPlayed.isEmpty());
+        System.out.println("Get first: " + recentlyPlayed.getFirst());
+        System.out.println("Get by index(1): " + recentlyPlayed.get(1));
+        recentlyPlayed.remove("Starboy");
+        System.out.println("After remove: " + recentlyPlayed);
+
+        // Iterate custom LinkedList
+        System.out.println("Iterating CustomLinkedList:");
+        for (String title : recentlyPlayed) {
+            System.out.println("  - " + title);
+        }
+
+        System.out.println("\n===== END OF HOMEWORK 6 =====");
     }
 }

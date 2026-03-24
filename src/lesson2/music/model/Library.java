@@ -1,5 +1,8 @@
 package lesson2.music.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents user's personal media library.
  * Independent domain entity.
@@ -10,14 +13,14 @@ public class Library {
     private User owner;
 
     // Stored media in library
-    private Media[] mediaItems;
+    private List<Media> mediaItems;
 
     /**
-     * Constructor initializes library with empty media array
+     * Constructor initializes library with empty media list
      */
     public Library(User owner) {
         this.owner = owner;
-        this.mediaItems = new Media[0]; // start with empty library
+        this.mediaItems = new ArrayList<>();
     }
 
     // -------- Getters --------
@@ -26,7 +29,7 @@ public class Library {
         return owner;
     }
 
-    public Media[] getMediaItems() {
+    public List<Media> getMediaItems() {
         return mediaItems;
     }
 
@@ -34,17 +37,9 @@ public class Library {
 
     /**
      * Adds media to library.
-     * Creates a new array and copies existing elements.
      */
     public void addMedia(Media media) {
-
-        Media[] newMedia = new Media[mediaItems.length + 1];
-
-        System.arraycopy(mediaItems, 0, newMedia, 0, mediaItems.length);
-
-        newMedia[mediaItems.length] = media;
-
-        mediaItems = newMedia;
+        mediaItems.add(media);
     }
 
     /**
@@ -65,7 +60,7 @@ public class Library {
         this.owner = owner;
     }
 
-    public void setMediaItems(Media[] mediaItems) {
+    public void setMediaItems(List<Media> mediaItems) {
         this.mediaItems = mediaItems;
     }
 }

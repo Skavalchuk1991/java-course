@@ -1,6 +1,8 @@
 package lesson2.music.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a music album.
@@ -17,10 +19,10 @@ public class Album implements Reviewable {
     // Artist of this album
     private Artist artist;
 
-    // Array of songs in this album
-    private Song[] songs;
+    // Songs in this album
+    private List<Song> songs;
 
-    private Review[] reviews = new Review[0];
+    private List<Review> reviews;
 
     /**
      * Constructor to initialize album fields
@@ -29,28 +31,26 @@ public class Album implements Reviewable {
         this.title = title;
         this.releaseDate = releaseDate;
         this.artist = artist;
-        this.songs = new Song[0];
+        this.songs = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
     @Override
     public void addReview(Review review) {
-        Review[] newReviews = new Review[reviews.length + 1];
-        System.arraycopy(reviews, 0, newReviews, 0, reviews.length);
-        newReviews[reviews.length] = review;
-        reviews = newReviews;
+        reviews.add(review);
     }
 
     @Override
     public double getAverageRating() {
-        if (reviews.length == 0) return 0.0;
+        if (reviews.isEmpty()) return 0.0;
         int total = 0;
         for (Review r : reviews) {
             total += r.getRating();
         }
-        return (double) total / reviews.length;
+        return (double) total / reviews.size();
     }
 
-    public Review[] getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
@@ -68,7 +68,7 @@ public class Album implements Reviewable {
         return artist;
     }
 
-    public Song[] getSongs() {
+    public List<Song> getSongs() {
         return songs;
     }
 
@@ -78,10 +78,7 @@ public class Album implements Reviewable {
      * Adds a song to the album.
      */
     public void addSong(Song song) {
-        Song[] newSongs = new Song[songs.length + 1];
-        System.arraycopy(songs, 0, newSongs, 0, songs.length);
-        newSongs[songs.length] = song;
-        songs = newSongs;
+        songs.add(song);
     }
 
     /**
@@ -90,7 +87,7 @@ public class Album implements Reviewable {
     public void printAlbumInfo() {
         System.out.println("Album: " + title + " (" + releaseDate + ")");
         System.out.println("Artist: " + artist.getName());
-        System.out.println("Total songs: " + songs.length);
+        System.out.println("Total songs: " + songs.size());
     }
 
     // ---------- Setters ----------
@@ -107,7 +104,11 @@ public class Album implements Reviewable {
         this.artist = artist;
     }
 
-    public void setSongs(Song[] songs) {
+    public void setSongs(List<Song> songs) {
         this.songs = songs;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

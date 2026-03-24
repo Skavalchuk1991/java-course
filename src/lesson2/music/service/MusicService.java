@@ -5,11 +5,19 @@ import lesson2.music.exception.MediaLoadException;
 import lesson2.music.exception.UserNotFoundException;
 import lesson2.music.model.Artist;
 import lesson2.music.model.Downloadable;
+import lesson2.music.model.Genre;
 import lesson2.music.model.Media;
 import lesson2.music.model.Playable;
 import lesson2.music.model.Reviewable;
 import lesson2.music.model.Shareable;
 import lesson2.music.model.User;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Core service of the music streaming system
@@ -26,30 +34,56 @@ public class MusicService {
     }
 
     // Catalog of artists in the service
-    private Artist[] artists;
+    private List<Artist> artists;
 
     // Catalog of available media (Songs and Podcasts)
-    private Media[] catalog;
+    private List<Media> catalog;
 
     // Registered users
-    private User[] users;
+    private List<User> users;
 
     // Field with supertype — can hold any Media subtype (polymorphism)
     private Media featuredMedia;
 
+    // Set of unique genres in the catalog (no duplicates)
+    private Set<Genre> genres = new HashSet<>();
+
+    // Map: user -> list of media they listened to (custom class as key)
+    private Map<User, List<Media>> listeningHistory = new HashMap<>();
+
     /**
      * Constructor
      */
-    public MusicService(Media[] catalog, User[] users) {
-        this.artists = new Artist[0];
+    public MusicService(List<Media> catalog, List<User> users) {
+        this.artists = new ArrayList<>();
         this.catalog = catalog;
         this.users = users;
-        totalRegisteredUsers = users.length;
+        totalRegisteredUsers = users.size();
     }
 
     // Static method
     public static int getTotalRegisteredUsers() {
         return totalRegisteredUsers;
+    }
+
+    public void addGenre(Genre genre) {
+        genres.add(genre);
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void recordListening(User user, Media media) {
+        listeningHistory.computeIfAbsent(user, k -> new ArrayList<>()).add(media);
+    }
+
+    public Map<User, List<Media>> getListeningHistory() {
+        return listeningHistory;
+    }
+
+    public List<Media> getUserHistory(User user) {
+        return listeningHistory.getOrDefault(user, new ArrayList<>());
     }
 
     /**
@@ -71,6 +105,7 @@ public class MusicService {
 
         // Increase global streaming counter
         StreamingStatistics.increaseCounter();
+        recordListening(user, media);
     }
 
     /**
@@ -89,15 +124,15 @@ public class MusicService {
         return null; // In real code, would return actual media
     }
 
-    public Artist[] getArtists() {
+    public List<Artist> getArtists() {
         return artists;
     }
 
-    public Media[] getCatalog() {
+    public List<Media> getCatalog() {
         return catalog;
     }
 
-    public User[] getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
@@ -152,54 +187,37 @@ public class MusicService {
         System.out.println("Average rating: " + item.getAverageRating());
     }
 
-    public void setArtists(Artist[] artists) {
+    public void setArtists(List<Artist> artists) {
         this.artists = artists;
     }
 
-    public void setCatalog(Media[] catalog) {
+    public void setCatalog(List<Media> catalog) {
         this.catalog = catalog;
     }
 
-    public void setUsers(User[] users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
     /**
      * Adds new artist to the service.
-     * Creates a new array and copies existing artists into it.
      */
     public void addArtist(Artist newArtist) {
-        Artist[] newArtists = new Artist[artists.length + 1];
-        System.arraycopy(artists, 0, newArtists, 0, artists.length);
-        newArtists[artists.length] = newArtist;
-        artists = newArtists;
+        artists.add(newArtist);
     }
 
     /**
      * Adds new user to the system.
-     * Since arrays have fixed size, we create a new array
-     * and copy existing users into it.
      */
     public void addUser(User newUser) {
-        User[] newUsers = new User[users.length + 1];
-        System.arraycopy(users, 0, newUsers, 0, users.length);
-        newUsers[users.length] = newUser;
-        users = newUsers;
+        users.add(newUser);
         totalRegisteredUsers++;
     }
 
     /**
      * Adds new media to catalog.
-     * Creates a new array and copies old media items.
      */
     public void addMedia(Media newMedia) {
-
-        Media[] newCatalog = new Media[catalog.length + 1];
-
-        System.arraycopy(catalog, 0, newCatalog, 0, catalog.length);
-
-        newCatalog[catalog.length] = newMedia;
-
-        catalog = newCatalog;
+        catalog.add(newMedia);
     }
 }

@@ -1,5 +1,8 @@
 package lesson2.music.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a music artist in the system.
  * This is an independent domain entity (not inherited from Media).
@@ -16,11 +19,11 @@ public class Artist implements Reviewable {
     private int debutYear;
 
     // Artist's albums
-    private Album[] albums;
+    private List<Album> albums;
 
     // -------- Reviewable --------
 
-    private Review[] reviews = new Review[0];
+    private List<Review> reviews;
 
     /**
      * Constructor to initialize artist fields
@@ -29,28 +32,26 @@ public class Artist implements Reviewable {
         this.name = name;
         this.country = country;
         this.debutYear = debutYear;
-        this.albums = new Album[0];
+        this.albums = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
     @Override
     public void addReview(Review review) {
-        Review[] newReviews = new Review[reviews.length + 1];
-        System.arraycopy(reviews, 0, newReviews, 0, reviews.length);
-        newReviews[reviews.length] = review;
-        reviews = newReviews;
+        reviews.add(review);
     }
 
     @Override
     public double getAverageRating() {
-        if (reviews.length == 0) return 0.0;
+        if (reviews.isEmpty()) return 0.0;
         int total = 0;
         for (Review r : reviews) {
             total += r.getRating();
         }
-        return (double) total / reviews.length;
+        return (double) total / reviews.size();
     }
 
-    public Review[] getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
@@ -68,7 +69,7 @@ public class Artist implements Reviewable {
         return debutYear;
     }
 
-    public Album[] getAlbums() {
+    public List<Album> getAlbums() {
         return albums;
     }
 
@@ -86,8 +87,12 @@ public class Artist implements Reviewable {
         this.debutYear = debutYear;
     }
 
-    public void setAlbums(Album[] albums) {
+    public void setAlbums(List<Album> albums) {
         this.albums = albums;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     /**

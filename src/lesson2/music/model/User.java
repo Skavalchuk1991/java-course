@@ -1,5 +1,7 @@
 package lesson2.music.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -20,13 +22,13 @@ public class User extends BaseEntity {
     private Library library;
 
     // Personal playlists
-    private Playlist[] playlists;
+    private List<Playlist> playlists;
 
     // Reviews written by user
-    private Review[] reviews;
+    private List<Review> reviews;
 
     // Notifications for user
-    private Notification[] notifications;
+    private List<Notification> notifications;
 
     /**
      * Constructor to initialize user
@@ -36,9 +38,9 @@ public class User extends BaseEntity {
         this.username = username;
         this.email = email;
         this.subscription = subscription;
-        this.playlists = new Playlist[0];
-        this.reviews = new Review[0];
-        this.notifications = new Notification[0];
+        this.playlists = new ArrayList<>();
+        this.reviews = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     // -------- Getters --------
@@ -68,15 +70,15 @@ public class User extends BaseEntity {
         return library;
     }
 
-    public Playlist[] getPlaylists() {
+    public List<Playlist> getPlaylists() {
         return playlists;
     }
 
-    public Review[] getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
-    public Notification[] getNotifications() {
+    public List<Notification> getNotifications() {
         return notifications;
     }
 
@@ -98,15 +100,15 @@ public class User extends BaseEntity {
         this.library = library;
     }
 
-    public void setPlaylists(Playlist[] playlists) {
+    public void setPlaylists(List<Playlist> playlists) {
         this.playlists = playlists;
     }
 
-    public void setReviews(Review[] reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
 
-    public void setNotifications(Notification[] notifications) {
+    public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
 
