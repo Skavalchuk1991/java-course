@@ -38,14 +38,18 @@ public class AppRunner {
         Album album = new Album("After Hours", LocalDate.of(2020, 3, 20), artist);
         album.addSong(song1);
         album.addSong(song2);
-        artist.setAlbums(new ArrayList<>(List.of(album)));
+        artist.getAlbums().add(album);
 
-        List<Artist> artists = new ArrayList<>(List.of(artist));
+        List<Artist> artists = new ArrayList<>();
+        artists.add(artist);
 
         // ---------- 2. Catalog: media from artists' albums + other media ----------
 
         Podcast podcast1 = new Podcast(3, "Tech Talks", 1800, "John Doe", 5);
-        List<Media> catalog = new ArrayList<>(List.of(song1, song2, podcast1));
+        List<Media> catalog = new ArrayList<>();
+        catalog.add(song1);
+        catalog.add(song2);
+        catalog.add(podcast1);
 
         // ---------- 3. Users with their library, playlists, reviews, notifications ----------
 
@@ -57,7 +61,9 @@ public class AppRunner {
         library.addMedia(podcast1);
         user.setLibrary(library);
 
-        List<Media> playlistItems = new ArrayList<>(List.of(song1, song2));
+        List<Media> playlistItems = new ArrayList<>();
+        playlistItems.add(song1);
+        playlistItems.add(song2);
         Playlist playlist = new Playlist("My Playlist", playlistItems);
         user.getPlaylists().add(playlist);
         System.out.println("Playlist duration: " + playlist.calculateTotalDuration() + " sec");
@@ -70,7 +76,8 @@ public class AppRunner {
         user.getNotifications().add(notification);
         notification.send();
 
-        List<User> users = new ArrayList<>(List.of(user));
+        List<User> users = new ArrayList<>();
+        users.add(user);
 
         // ---------- 4. Root: MusicService with full hierarchy ----------
 
@@ -339,7 +346,9 @@ public class AppRunner {
         System.out.println("User '" + user.getUsername() + "' listened to " + userHistory.size() + " items");
 
         // put — add history for newUser manually
-        history.put(newUser, new ArrayList<>(List.of(song1)));
+        List<Media> newUserMedia = new ArrayList<>();
+        newUserMedia.add(song1);
+        history.put(newUser, newUserMedia);
         System.out.println("After put, history map size: " + history.size());
 
         // Iterate through Map (entrySet)
