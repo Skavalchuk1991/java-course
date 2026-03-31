@@ -80,7 +80,7 @@ public class MusicService {
     }
 
     public void recordListening(User user, Media media) {
-        listeningHistory.computeIfAbsent(user, k -> new ArrayList<>()).add(media);
+        listeningHistory.computeIfAbsent(user, userKey -> new ArrayList<>()).add(media);
     }
 
     public Map<User, List<Media>> getListeningHistory() {

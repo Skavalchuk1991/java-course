@@ -441,8 +441,8 @@ public class AppRunner {
         System.out.println("Get or default (id=999): " + found.getTitle());
 
         // BiFunction<User, Media, String> — create a listening message
-        BiFunction<User, Media, String> listenMessage = (u, m) ->
-                u.getUsername() + " just listened to '" + m.getTitle() + "'";
+        BiFunction<User, Media, String> listenMessage = (user, media) ->
+                user.getUsername() + " just listened to '" + media.getTitle() + "'";
         String msg = musicService.processUserMedia(user, song1, listenMessage);
         System.out.println("BiFunction result: " + msg);
 
@@ -452,8 +452,8 @@ public class AppRunner {
         cacheCleanup.run();
 
         // BiConsumer<User, Media> — perform action with two inputs, no return
-        BiConsumer<User, Media> logListening = (u, m) ->
-                System.out.println("LOG: " + u.getUsername() + " listened to " + m.getTitle());
+        BiConsumer<User, Media> logListening = (user, media) ->
+                System.out.println("LOG: " + user.getUsername() + " listened to " + media.getTitle());
         logListening.accept(user, song1);
         logListening.accept(user, podcast1);
 
@@ -461,16 +461,16 @@ public class AppRunner {
         System.out.println("\n--- 2. Custom functional interfaces ---");
 
         // MediaFilter<Song> — filter songs by artist
-        MediaFilter<Song> weekndFilter = s -> s.getArtist().equals("The Weeknd");
+        MediaFilter<Song> weekndFilter = song -> song.getArtist().equals("The Weeknd");
         System.out.println("Is song1 by The Weeknd? " + weekndFilter.test(song1));
 
         // MediaTransformer<Song, String> — transform song to display string
-        MediaTransformer<Song, String> songFormatter = s ->
-                s.getTitle() + " by " + s.getArtist() + " (" + s.getDuration() + "s)";
+        MediaTransformer<Song, String> songFormatter = song ->
+                song.getTitle() + " by " + song.getArtist() + " (" + song.getDuration() + "s)";
         System.out.println("Formatted: " + songFormatter.transform(song1));
 
         // MediaAction<Media> — action on media
-        MediaAction<Media> playAction = m -> System.out.println("Custom action: Playing " + m.getTitle());
+        MediaAction<Media> playAction = media -> System.out.println("Custom action: Playing " + media.getTitle());
         playAction.execute(song1);
         playAction.execute(podcast1);
 
