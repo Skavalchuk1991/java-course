@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -531,6 +532,15 @@ public class AppRunner {
         System.out.println("Media longer than 200s: " + musicService.countMediaLongerThan(200));
         System.out.println("Sorted titles: " + musicService.getSortedTitles());
         System.out.println("Total catalog duration: " + musicService.getTotalCatalogDuration() + "s");
+
+        // --- Optional handling ---
+        System.out.println("\n--- Optional ---");
+        Optional<Media> foundMedia = musicService.findMediaByTitle("Blinding Lights");
+        foundMedia.ifPresent(media -> System.out.println("Found: " + media.getTitle()));
+
+        Optional<Media> missing = musicService.findMediaByTitle("Nonexistent Song");
+        System.out.println("Missing media: " + missing.orElse(new Song(0, "Fallback Song", 0, "Unknown", "Unknown", genre)));
+        System.out.println("Is present: " + missing.isPresent());
 
         // --- 2. Reflection + Annotation demo ---
         ReflectionDemo.run();

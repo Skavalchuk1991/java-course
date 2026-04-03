@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -291,6 +292,16 @@ public class MusicService {
         return catalog.stream()
                 .mapToInt(Media::getDuration)
                 .sum();
+    }
+
+    /**
+     * Stream + Optional: find media by title.
+     * Returns Optional to handle case when media is not found.
+     */
+    public Optional<Media> findMediaByTitle(String title) {
+        return catalog.stream()
+                .filter(media -> media.getTitle().equalsIgnoreCase(title))
+                .findFirst();
     }
 
     /**
