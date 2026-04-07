@@ -26,4 +26,5 @@ replay_pid*
 .DS_Store
 **/.DS_Store
 out/
+target/
 *.iml
