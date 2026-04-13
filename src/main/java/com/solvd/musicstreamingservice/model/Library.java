@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,8 @@ import java.util.List;
  * Independent domain entity.
  */
 public class Library {
+
+    private static final Logger LOGGER = LogManager.getLogger(Library.class);
 
     // Owner of the library
     private User owner;
@@ -47,10 +52,10 @@ public class Library {
      */
     public void printLibrary() {
 
-        System.out.println("Library of user: " + owner.getUsername());
+        LOGGER.info("Library of user: {}", owner.getUsername());
 
         for (Media media : mediaItems) {
-            System.out.println("- " + media.getTitle());
+            LOGGER.debug("- {}", media.getTitle());
         }
     }
 

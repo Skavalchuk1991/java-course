@@ -1,11 +1,16 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.time.LocalDateTime;
 
 /**
  * Represents a user review for media (song or album).
  */
 public class Review {
+
+    private static final Logger LOGGER = LogManager.getLogger(Review.class);
 
     // User who wrote the review
     private User user;
@@ -81,10 +86,10 @@ public class Review {
      * Business method – prints review information
      */
     public void printReview() {
-        System.out.println("User: " + user.getUsername());
-        System.out.println("Media: " + media.getTitle());
-        System.out.println("Rating: " + rating);
-        System.out.println("Comment: " + comment);
-        System.out.println("Reviewed at: " + reviewedAt);
+        LOGGER.info("User: {}", user.getUsername());
+        LOGGER.info("Media: {}", media.getTitle());
+        LOGGER.info("Rating: {}", rating);
+        LOGGER.info("Comment: {}", comment);
+        LOGGER.info("Reviewed at: {}", reviewedAt);
     }
 }

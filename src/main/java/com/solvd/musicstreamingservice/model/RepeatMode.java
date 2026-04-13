@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Enum for playlist repeat modes.
  */
@@ -13,8 +16,10 @@ public enum RepeatMode {
     private final boolean repeating;
     private final boolean multiTrack;
 
+    private static final Logger LOGGER = LogManager.getLogger(RepeatMode.class);
+
     static {
-        System.out.println("RepeatMode options loaded");
+        LOGGER.info("RepeatMode options loaded");
     }
 
     RepeatMode(String description, boolean repeating, boolean multiTrack) {

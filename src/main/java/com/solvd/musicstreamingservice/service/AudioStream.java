@@ -2,11 +2,16 @@ package com.solvd.musicstreamingservice.service;
 
 import com.solvd.musicstreamingservice.model.Media;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Represents an audio streaming connection that must be closed after use.
  * Implements AutoCloseable for use with try-with-resources.
  */
 public class AudioStream implements AutoCloseable {
+
+    private static final Logger LOGGER = LogManager.getLogger(AudioStream.class);
 
     private Media media;
     private boolean isOpen;
@@ -14,7 +19,7 @@ public class AudioStream implements AutoCloseable {
     public AudioStream(Media media) {
         this.media = media;
         this.isOpen = true;
-        System.out.println("AudioStream opened for: " + media.getTitle());
+        LOGGER.info("AudioStream opened for: {}", media.getTitle());
     }
 
     /**
@@ -24,7 +29,7 @@ public class AudioStream implements AutoCloseable {
         if (!isOpen) {
             throw new IllegalStateException("AudioStream is already closed");
         }
-        System.out.println("Streaming audio: " + media.getTitle() + " (" + media.getDuration() + " sec)");
+        LOGGER.info("Streaming audio: {} ({} sec)", media.getTitle(), media.getDuration());
     }
 
     public boolean isOpen() {
@@ -42,7 +47,7 @@ public class AudioStream implements AutoCloseable {
     public void close() {
         if (isOpen) {
             isOpen = false;
-            System.out.println("AudioStream closed for: " + media.getTitle());
+            LOGGER.info("AudioStream closed for: {}", media.getTitle());
         }
     }
 }

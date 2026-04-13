@@ -1,11 +1,16 @@
 package com.solvd.musicstreamingservice.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigDecimal;
 
 /**
  * Handles payment processing logic
  */
 public class PaymentService {
+
+    private static final Logger LOGGER = LogManager.getLogger(PaymentService.class);
 
     // Name of payment provider (e.g., Stripe, PayPal)
     private String paymentProvider;
@@ -27,7 +32,7 @@ public class PaymentService {
      */
     public void processPayment(BigDecimal amount) {
         totalRevenue = totalRevenue.add(amount);
-        System.out.println("Payment of $" + amount + " processed via " + paymentProvider);
+        LOGGER.info("Payment of $ {} processed via {}", amount, paymentProvider);
     }
 
     public BigDecimal getTotalRevenue() {

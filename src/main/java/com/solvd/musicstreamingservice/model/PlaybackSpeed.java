@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Enum for playback speed options.
  */
@@ -12,8 +15,10 @@ public enum PlaybackSpeed {
     private final double multiplier;
     private final String label;
 
+    private static final Logger LOGGER = LogManager.getLogger(PlaybackSpeed.class);
+
     static {
-        System.out.println("PlaybackSpeed options loaded");
+        LOGGER.info("PlaybackSpeed options loaded");
     }
 
     PlaybackSpeed(double multiplier, String label) {

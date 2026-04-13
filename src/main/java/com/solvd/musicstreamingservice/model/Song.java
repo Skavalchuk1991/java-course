@@ -2,12 +2,17 @@ package com.solvd.musicstreamingservice.model;
 
 import com.solvd.musicstreamingservice.reflection.JsonField;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 /**
  * Song is a specific type of Media
  */
 public class Song extends Media implements Playable, Downloadable, Shareable, Subscribable {
+
+    private static final Logger LOGGER = LogManager.getLogger(Song.class);
 
     // Artist of the song
     @JsonField(name = "artist_name")
@@ -36,7 +41,7 @@ public class Song extends Media implements Playable, Downloadable, Shareable, Su
     @Override
     public void download() {
         this.availableOffline = true;
-        System.out.println("Song '" + title + "' downloaded for offline use");
+        LOGGER.info("Song '{}' downloaded for offline use", title);
     }
 
     @Override
@@ -51,7 +56,7 @@ public class Song extends Media implements Playable, Downloadable, Shareable, Su
 
     @Override
     public void share(User recipient) {
-        System.out.println("Song '" + title + "' shared with " + recipient.getUsername());
+        LOGGER.info("Song '{}' shared with {}", title, recipient.getUsername());
     }
 
     @Override

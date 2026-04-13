@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +12,8 @@ import java.util.List;
  * Album belongs to an Artist and contains songs.
  */
 public class Album implements Reviewable {
+
+    private static final Logger LOGGER = LogManager.getLogger(Album.class);
 
     // Album title
     private String title;
@@ -83,9 +88,9 @@ public class Album implements Reviewable {
      * Prints album information
      */
     public void printAlbumInfo() {
-        System.out.println("Album: " + title + " (" + releaseDate + ")");
-        System.out.println("Artist: " + artist.getName());
-        System.out.println("Total songs: " + songs.size());
+        LOGGER.info("Album: {} ({})", title, releaseDate);
+        LOGGER.info("Artist: {}", artist.getName());
+        LOGGER.info("Total songs: {}", songs.size());
     }
 
     // ---------- Setters ----------

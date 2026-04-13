@@ -1,11 +1,16 @@
 package com.solvd.musicstreamingservice.reflection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.lang.reflect.Field;
 
 /**
  * Simple JSON serializer that uses @JsonField annotation via reflection.
  */
 public class JsonSerializer {
+
+    private static final Logger LOGGER = LogManager.getLogger(JsonSerializer.class);
 
     public static String serialize(Object obj) {
         StringBuilder json = new StringBuilder("{");
@@ -28,7 +33,7 @@ public class JsonSerializer {
                     }
                     first = false;
                 } catch (IllegalAccessException e) {
-                    System.out.println("Cannot access field: " + field.getName());
+                    LOGGER.error("Cannot access field: {}", field.getName());
                 }
             }
         }

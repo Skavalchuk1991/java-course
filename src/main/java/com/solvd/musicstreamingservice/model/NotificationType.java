@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Enum for notification types with priority and emoji.
  */
@@ -14,8 +17,10 @@ public enum NotificationType {
     private final int priority;
     private final String icon;
 
+    private static final Logger LOGGER = LogManager.getLogger(NotificationType.class);
+
     static {
-        System.out.println("NotificationType enum loaded");
+        LOGGER.info("NotificationType enum loaded");
     }
 
     NotificationType(String description, int priority, String icon) {

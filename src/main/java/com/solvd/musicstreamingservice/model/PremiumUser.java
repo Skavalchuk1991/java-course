@@ -2,11 +2,16 @@ package com.solvd.musicstreamingservice.model;
 
 import com.solvd.musicstreamingservice.exception.DownloadLimitExceededException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * PremiumUser is a special type of User
  * It extends User and adds extra functionality
  */
 public class PremiumUser extends User {
+
+    private static final Logger LOGGER = LogManager.getLogger(PremiumUser.class);
 
     // Maximum number of downloads available
     private int downloadLimit;
@@ -26,7 +31,7 @@ public class PremiumUser extends User {
     public void downloadSong(Song song) {
         if (downloadLimit > 0) {
             downloadLimit--;
-            System.out.println("Downloaded: " + song.getTitle());
+            LOGGER.info("Downloaded: {}", song.getTitle());
         } else {
             throw new DownloadLimitExceededException("Download limit reached for user: " + getUsername());
         }

@@ -2,12 +2,17 @@ package com.solvd.musicstreamingservice.model;
 
 import com.solvd.musicstreamingservice.exception.PlaylistFullException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 
 /**
  * Represents a playlist that contains media items
  */
 public class Playlist implements Shareable {
+
+    private static final Logger LOGGER = LogManager.getLogger(Playlist.class);
 
     // Name of playlist
     private String name;
@@ -39,7 +44,7 @@ public class Playlist implements Shareable {
 
     @Override
     public void share(User recipient) {
-        System.out.println("Playlist '" + name + "' shared with " + recipient.getUsername());
+        LOGGER.info("Playlist '{}' shared with {}", name, recipient.getUsername());
     }
 
     /**

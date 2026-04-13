@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Complex enum representing subscription tiers.
  * Has fields, constructor, methods, and a static block.
@@ -15,9 +18,11 @@ public enum SubscriptionTier {
     private final int maxDownloads;
     private final boolean offlineAccess;
 
+    private static final Logger LOGGER = LogManager.getLogger(SubscriptionTier.class);
+
     // Static block
     static {
-        System.out.println("SubscriptionTier enum loaded. Tiers available: " + values().length);
+        LOGGER.info("SubscriptionTier enum loaded. Tiers available: {}", values().length);
     }
 
     // Constructor

@@ -12,6 +12,9 @@ import com.solvd.musicstreamingservice.model.Reviewable;
 import com.solvd.musicstreamingservice.model.Shareable;
 import com.solvd.musicstreamingservice.model.User;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,12 +34,14 @@ import java.util.stream.Collectors;
  */
 public class MusicService {
 
+    private static final Logger LOGGER = LogManager.getLogger(MusicService.class);
+
     // Static variable — shared across all instances
     private static int totalRegisteredUsers = 0;
 
     // Static block — runs once when class is loaded
     static {
-        System.out.println("MusicService class initialized");
+        LOGGER.info("MusicService class initialized");
         totalRegisteredUsers = 0;
     }
 
@@ -105,7 +110,7 @@ public class MusicService {
             throw new InvalidSubscriptionException("User '" + user.getUsername() + "' has no valid subscription");
         }
 
-        System.out.println(user.getUsername() + " is streaming: " + media.getTitle());
+        LOGGER.info("User {} is streaming: {}", user.getUsername(), media.getTitle());
 
         // Call media play method (polymorphism)
         media.play();
@@ -127,7 +132,7 @@ public class MusicService {
         if (source.contains("corrupted")) {
             throw new MediaLoadException("Cannot load media: source '" + source + "' is corrupted");
         }
-        System.out.println("Media loaded successfully from: " + source);
+        LOGGER.info("Media loaded successfully from: {}", source);
         return null; // In real code, would return actual media
     }
 
@@ -156,7 +161,7 @@ public class MusicService {
      * Calls overridden getMediaInfo() — different result for Song vs Podcast.
      */
     public void printMediaInfo(Media media) {
-        System.out.println(media.getMediaInfo());
+        LOGGER.info("{}", media.getMediaInfo());
     }
 
     /**
@@ -164,7 +169,7 @@ public class MusicService {
      * Works with any object that implements Playable — Song, Podcast, etc.
      */
     public void playItem(Playable item) {
-        System.out.println("Duration: " + item.getDuration() + " sec");
+        LOGGER.info("Duration: {} sec", item.getDuration());
         item.play();
     }
 
@@ -173,7 +178,7 @@ public class MusicService {
      * Works with any object that implements Shareable.
      */
     public void shareItem(Shareable item, User recipient) {
-        System.out.println("Share link: " + item.getShareLink());
+        LOGGER.info("Share link: {}", item.getShareLink());
         item.share(recipient);
     }
 
@@ -183,7 +188,7 @@ public class MusicService {
      */
     public void downloadItem(Downloadable item) {
         item.download();
-        System.out.println("Available offline: " + item.isAvailableOffline());
+        LOGGER.info("Available offline: {}", item.isAvailableOffline());
     }
 
     /**
@@ -191,7 +196,7 @@ public class MusicService {
      * Works with any class that explicitly implements Reviewable.
      */
     public void printAverageRating(Reviewable item) {
-        System.out.println("Average rating: " + item.getAverageRating());
+        LOGGER.info("Average rating: {}", item.getAverageRating());
     }
 
     public void setArtists(List<Artist> artists) {

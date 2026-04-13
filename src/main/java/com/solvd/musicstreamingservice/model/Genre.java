@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 /**
@@ -7,6 +10,8 @@ import java.util.Objects;
  * Independent domain entity.
  */
 public class Genre {
+
+    private static final Logger LOGGER = LogManager.getLogger(Genre.class);
 
     // Name of the genre (e.g., Rock, Jazz, Hip-Hop)
     private String name;
@@ -46,8 +51,8 @@ public class Genre {
      * Business method – prints genre info
      */
     public void printGenreInfo() {
-        System.out.println("Genre: " + name);
-        System.out.println("Description: " + description);
+        LOGGER.info("Genre: {}", name);
+        LOGGER.info("Description: {}", description);
     }
 
     @Override

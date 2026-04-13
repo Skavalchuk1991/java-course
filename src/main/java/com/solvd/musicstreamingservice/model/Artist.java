@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,8 @@ import java.util.List;
  * This is an independent domain entity (not inherited from Media).
  */
 public class Artist implements Reviewable {
+
+    private static final Logger LOGGER = LogManager.getLogger(Artist.class);
 
     // Artist stage or real name
     private String name;
@@ -97,6 +102,6 @@ public class Artist implements Reviewable {
      * Business method – prints short info about artist
      */
     public void printArtistInfo() {
-        System.out.println(name + " from " + country + " (since " + debutYear + ")");
+        LOGGER.info("{} from {} (since {})", name, country, debutYear);
     }
 }

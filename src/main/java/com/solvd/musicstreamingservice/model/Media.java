@@ -1,10 +1,15 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Abstract base class that represents any playable media
  * (Song, Podcast, etc.)
  */
 public abstract class Media extends BaseEntity implements Playable {
+
+    private static final Logger LOGGER = LogManager.getLogger(Media.class);
 
     // Title of media (name of song or podcast)
     protected String title;
@@ -14,7 +19,7 @@ public abstract class Media extends BaseEntity implements Playable {
 
     // Static block – runs once when class is loaded
     static {
-        System.out.println("Media class loaded into memory");
+        LOGGER.info("Media class loaded into memory");
     }
 
     /**
@@ -36,7 +41,7 @@ public abstract class Media extends BaseEntity implements Playable {
      */
     @Override
     public void play() {
-        System.out.println("Playing: " + title);
+        LOGGER.info("Playing: {}", title);
     }
 
     // --------- Getters ---------

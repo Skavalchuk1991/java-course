@@ -1,5 +1,8 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Enum representing types of media content.
  */
@@ -14,8 +17,10 @@ public enum MediaType {
     private final int minDurationMinutes;
     private final int maxDurationMinutes;
 
+    private static final Logger LOGGER = LogManager.getLogger(MediaType.class);
+
     static {
-        System.out.println("MediaType enum loaded with " + values().length + " types");
+        LOGGER.info("MediaType enum loaded with {} types", values().length);
     }
 
     MediaType(String description, int minDurationMinutes, int maxDurationMinutes) {

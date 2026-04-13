@@ -1,10 +1,15 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Represents a notification sent to a user.
  * Independent domain entity.
  */
 public class Notification {
+
+    private static final Logger LOGGER = LogManager.getLogger(Notification.class);
 
     // Recipient of the notification
     private User user;
@@ -56,8 +61,8 @@ public class Notification {
      * Business method – simulate sending notification
      */
     public void send() {
-        System.out.println("Notification to " + user.getUsername());
-        System.out.println("Type: " + type);
-        System.out.println("Message: " + message);
+        LOGGER.info("Notification to {}", user.getUsername());
+        LOGGER.info("Type: {}", type);
+        LOGGER.info("Message: {}", message);
     }
 }

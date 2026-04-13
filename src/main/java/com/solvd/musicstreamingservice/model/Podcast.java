@@ -1,9 +1,14 @@
 package com.solvd.musicstreamingservice.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Podcast is another type of Media
  */
 public class Podcast extends Media implements Playable, Downloadable, Subscribable {
+
+    private static final Logger LOGGER = LogManager.getLogger(Podcast.class);
 
     // Host of the podcast
     private String host;
@@ -37,7 +42,7 @@ public class Podcast extends Media implements Playable, Downloadable, Subscribab
     @Override
     public void download() {
         this.availableOffline = true;
-        System.out.println("Podcast '" + title + "' downloaded for offline use");
+        LOGGER.info("Podcast '{}' downloaded for offline use", title);
     }
 
     @Override
