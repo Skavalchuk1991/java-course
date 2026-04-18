@@ -10,6 +10,10 @@ import com.solvd.musicstreamingservice.service.RatingSystem;
 import com.solvd.musicstreamingservice.service.StreamingStatistics;
 import com.solvd.musicstreamingservice.reflection.ReflectionDemo;
 import com.solvd.musicstreamingservice.util.WordCounter;
+import com.solvd.musicstreamingservice.pool.Connection;
+import com.solvd.musicstreamingservice.pool.ConnectionPool;
+import com.solvd.musicstreamingservice.pool.ConnectionRunnable;
+import com.solvd.musicstreamingservice.pool.ConnectionThread;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -561,5 +565,63 @@ public class AppRunner {
         WordCounter.countUniqueWords("src/main/resources/book.txt", "src/main/resources/unique_words.txt");
 
         LOGGER.info("\n===== END OF HOMEWORK 10 =====");
+
+        // ============ HOMEWORK 11: Threads, Connection Pool ============
+
+        LOGGER.info("\n===== HOMEWORK 11: THREADS, CONNECTION POOL =====\n");
+
+        // --- 1. Two threads: Thread subclass + Runnable ---
+        LOGGER.info("--- 1. Thread subclass + Runnable ---");
+        ConnectionPool pool = ConnectionPool.getInstance(5);
+
+        // Thread created by extending Thread
+        ConnectionThread thread1 = new ConnectionThread("ExtendThread-1", pool);
+
+        // Thread created by implementing Runnable
+        Thread thread2 = new Thread(new ConnectionRunnable(pool), "RunnableThread-1");
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            LOGGER.error("Main thread interrupted: {}", e.getMessage());
+        }
+
+        // --- 2. Connection Pool with ExecutorService (7 threads, 5 connections) ---
+        LOGGER.info("\n--- 2. ExecutorService: 7 threads competing for 5 connections ---");
+
+        java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(7);
+
+        // Submit 7 tasks — 5 will get connections immediately and 2 will wait
+        for (int i = 1; i <= 7; i++) {
+            final int taskId = i;
+            executor.submit(() -> {
+                Connection conn = pool.getConnection();
+                try {
+                    conn.create("Task-" + taskId + " data");
+                    conn.get(taskId);
+                    Thread.sleep(2000); // simulate work — hold connection for 2 seconds
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } finally {
+                    pool.releaseConnection(conn);
+                }
+            });
+        }
+
+        // Shutdown executor and wait for all tasks to complete
+        executor.shutdown();
+        try {
+            executor.awaitTermination(30, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            LOGGER.error("Executor interrupted: {}", e.getMessage());
+        }
+
+        LOGGER.info("All threads completed. Available connections: {}", pool.getAvailableCount());
+
+        LOGGER.info("\n===== END OF HOMEWORK 11 =====");
     }
 }
