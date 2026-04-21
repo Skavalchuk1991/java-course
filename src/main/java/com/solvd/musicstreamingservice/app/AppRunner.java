@@ -620,6 +620,53 @@ public class AppRunner {
             LOGGER.error("Executor interrupted: {}", e.getMessage());
         }
 
+        // --- 3. CompletableFuture demos (5 examples) ---
+        LOGGER.info("\n--- 3. CompletableFuture (with and without CompletionStage) ---");
+
+        // 1. supplyAsync + thenApply (CompletionStage chain)
+        java.util.concurrent.CompletableFuture<String> future1 = java.util.concurrent.CompletableFuture
+                .supplyAsync(() -> {
+                    LOGGER.info("Future1: Loading song data...");
+                    return "Blinding Lights";
+                })
+                .thenApply(title -> {
+                    LOGGER.info("Future1: Transforming title to uppercase");
+                    return title.toUpperCase();
+                });
+        LOGGER.info("Future1 result: {}", future1.join());
+
+        // 2. supplyAsync + thenAccept (consume result, no return)
+        java.util.concurrent.CompletableFuture<Void> future2 = java.util.concurrent.CompletableFuture
+                .supplyAsync(() -> "sergey")
+                .thenAccept(username -> LOGGER.info("Future2: Welcome back, {}!", username));
+        future2.join();
+
+        // 3. supplyAsync + thenCombine (combine two futures)
+        java.util.concurrent.CompletableFuture<String> songFuture = java.util.concurrent.CompletableFuture
+                .supplyAsync(() -> "Blinding Lights");
+        java.util.concurrent.CompletableFuture<String> artistFuture = java.util.concurrent.CompletableFuture
+                .supplyAsync(() -> "The Weeknd");
+        java.util.concurrent.CompletableFuture<String> future3 = songFuture
+                .thenCombine(artistFuture, (song, performer) -> song + " by " + performer);
+        LOGGER.info("Future3 combined: {}", future3.join());
+
+        // 4. runAsync (no input, no output — fire and forget)
+        java.util.concurrent.CompletableFuture<Void> future4 = java.util.concurrent.CompletableFuture
+                .runAsync(() -> LOGGER.info("Future4: Background cache cleanup executed"));
+        future4.join();
+
+        // 5. supplyAsync + exceptionally (error handling)
+        java.util.concurrent.CompletableFuture<String> future5 = java.util.concurrent.CompletableFuture
+                .supplyAsync(() -> {
+                    if (true) throw new RuntimeException("Simulated connection failure");
+                    return "data";
+                })
+                .exceptionally(ex -> {
+                    LOGGER.error("Future5: Caught error: {}", ex.getMessage());
+                    return "fallback data";
+                });
+        LOGGER.info("Future5 result: {}", future5.join());
+
         LOGGER.info("All threads completed. Available connections: {}", pool.getAvailableCount());
 
         LOGGER.info("\n===== END OF HOMEWORK 11 =====");
