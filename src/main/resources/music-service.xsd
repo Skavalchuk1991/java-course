@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="musicService">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="serviceName" type="xs:string"/>
+                <xs:element name="totalStreams" type="xs:int"/>
+                <xs:element name="artists">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="artist" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="country" type="xs:string"/>
+                                        <xs:element name="debutYear" type="xs:int"/>
+                                        <xs:element name="verified" type="xs:boolean"/>
+                                        <xs:element name="lastUpdated" type="xs:dateTime"/>
+                                        <xs:element name="albums">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="album" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="title" type="xs:string"/>
+                                                                <xs:element name="releaseDate" type="xs:string"/>
+                                                                <xs:element name="totalTracks" type="xs:int"/>
+                                                                <xs:element name="explicit" type="xs:boolean"/>
+                                                                <xs:element name="createdAt" type="xs:dateTime"/>
+                                                                <xs:element name="songs">
+                                                                    <xs:complexType>
+                                                                        <xs:sequence>
+                                                                            <xs:element name="song" maxOccurs="unbounded">
+                                                                                <xs:complexType>
+                                                                                    <xs:sequence>
+                                                                                        <xs:element name="title" type="xs:string"/>
+                                                                                        <xs:element name="artistName" type="xs:string"/>
+                                                                                        <xs:element name="genreName" type="xs:string"/>
+                                                                                        <xs:element name="duration" type="xs:int"/>
+                                                                                        <xs:element name="availableOffline" type="xs:boolean"/>
+                                                                                        <xs:element name="addedAt" type="xs:dateTime"/>
+                                                                                    </xs:sequence>
+                                                                                    <xs:attribute name="id" type="xs:int" use="required"/>
+                                                                                </xs:complexType>
+                                                                            </xs:element>
+                                                                        </xs:sequence>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="users">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="user" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="username" type="xs:string"/>
+                                        <xs:element name="email" type="xs:string"/>
+                                        <xs:element name="subscriptionType" type="xs:string"/>
+                                        <xs:element name="premium" type="xs:boolean"/>
+                                        <xs:element name="downloadLimit" type="xs:int"/>
+                                        <xs:element name="registeredAt" type="xs:dateTime"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:int" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

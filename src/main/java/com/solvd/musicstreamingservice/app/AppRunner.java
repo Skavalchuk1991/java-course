@@ -670,5 +670,43 @@ public class AppRunner {
         LOGGER.info("All threads completed. Available connections: {}", pool.getAvailableCount());
 
         LOGGER.info("\n===== END OF HOMEWORK 11 =====");
+
+        // ============ HOMEWORK 12: XML, XSD, StAX, JAXB, Jackson ============
+
+        LOGGER.info("\n===== HOMEWORK 12: XML, XSD, STAX, JAXB, JACKSON =====\n");
+
+        // --- 1. Validate XML against XSD ---
+        LOGGER.info("--- 1. XSD Validation ---");
+        com.solvd.musicstreamingservice.xml.XsdValidator.validate(
+                "src/main/resources/music-service.xml",
+                "src/main/resources/music-service.xsd");
+
+        // --- 2. StAX Parser ---
+        LOGGER.info("\n--- 2. StAX Parser ---");
+        com.solvd.musicstreamingservice.xml.Parser staxParser = new com.solvd.musicstreamingservice.xml.StaxParser();
+        com.solvd.musicstreamingservice.xml.model.XmlMusicService staxResult = staxParser.parse("src/main/resources/music-service.xml");
+        LOGGER.info("StAX result: {}", staxResult);
+        staxResult.getArtists().forEach(a -> {
+            LOGGER.info("  Artist: {}", a);
+            a.getAlbums().forEach(alb -> {
+                LOGGER.info("    Album: {}", alb);
+                alb.getSongs().forEach(s -> LOGGER.info("      Song: {}", s));
+            });
+        });
+        staxResult.getUsers().forEach(u -> LOGGER.info("  User: {}", u));
+
+        // --- 3. JAXB Parser ---
+        LOGGER.info("\n--- 3. JAXB Parser ---");
+        com.solvd.musicstreamingservice.xml.Parser jaxbParser = new com.solvd.musicstreamingservice.xml.JaxbParser();
+        com.solvd.musicstreamingservice.xml.model.XmlMusicService jaxbResult = jaxbParser.parse("src/main/resources/music-service.xml");
+        LOGGER.info("JAXB result: {}", jaxbResult);
+
+        // --- 4. Jackson Parser (JSON) ---
+        LOGGER.info("\n--- 4. Jackson Parser (JSON) ---");
+        com.solvd.musicstreamingservice.xml.Parser jacksonParser = new com.solvd.musicstreamingservice.xml.JacksonParser();
+        com.solvd.musicstreamingservice.xml.model.XmlMusicService jacksonResult = jacksonParser.parse("src/main/resources/music-service.json");
+        LOGGER.info("Jackson result: {}", jacksonResult);
+
+        LOGGER.info("\n===== END OF HOMEWORK 12 =====");
     }
 }

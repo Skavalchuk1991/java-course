@@ -1,0 +1,62 @@
+{
+  "serviceName": "Music Streaming Service",
+  "totalStreams": 15000,
+  "artists": [
+    {
+      "name": "The Weeknd",
+      "country": "Canada",
+      "debutYear": 2010,
+      "verified": true,
+      "lastUpdated": "2025-01-15T10:30:00",
+      "albums": [
+        {
+          "title": "After Hours",
+          "releaseDate": "2020-03-20",
+          "totalTracks": 2,
+          "explicit": false,
+          "createdAt": "2024-06-01T12:00:00",
+          "songs": [
+            {
+              "id": 1,
+              "title": "Blinding Lights",
+              "artistName": "The Weeknd",
+              "genreName": "Pop",
+              "duration": 200,
+              "availableOffline": true,
+              "addedAt": "2024-06-01T12:00:00"
+            },
+            {
+              "id": 2,
+              "title": "Starboy",
+              "artistName": "The Weeknd",
+              "genreName": "Pop",
+              "duration": 210,
+              "availableOffline": false,
+              "addedAt": "2024-06-02T14:30:00"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "sergey",
+      "email": "sergey@mail.com",
+      "subscriptionType": "Premium",
+      "premium": true,
+      "downloadLimit": 3,
+      "registeredAt": "2024-01-10T08:00:00"
+    },
+    {
+      "id": 2,
+      "username": "alex",
+      "email": "alex@mail.com",
+      "subscriptionType": "Basic",
+      "premium": false,
+      "downloadLimit": 0,
+      "registeredAt": "2024-03-15T10:30:00"
+    }
+  ]
+}

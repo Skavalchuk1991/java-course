@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<musicService>
+    <serviceName>Music Streaming Service</serviceName>
+    <totalStreams>15000</totalStreams>
+    <artists>
+        <artist>
+            <name>The Weeknd</name>
+            <country>Canada</country>
+            <debutYear>2010</debutYear>
+            <verified>true</verified>
+            <lastUpdated>2025-01-15T10:30:00</lastUpdated>
+            <albums>
+                <album>
+                    <title>After Hours</title>
+                    <releaseDate>2020-03-20</releaseDate>
+                    <totalTracks>2</totalTracks>
+                    <explicit>false</explicit>
+                    <createdAt>2024-06-01T12:00:00</createdAt>
+                    <songs>
+                        <song id="1">
+                            <title>Blinding Lights</title>
+                            <artistName>The Weeknd</artistName>
+                            <genreName>Pop</genreName>
+                            <duration>200</duration>
+                            <availableOffline>true</availableOffline>
+                            <addedAt>2024-06-01T12:00:00</addedAt>
+                        </song>
+                        <song id="2">
+                            <title>Starboy</title>
+                            <artistName>The Weeknd</artistName>
+                            <genreName>Pop</genreName>
+                            <duration>210</duration>
+                            <availableOffline>false</availableOffline>
+                            <addedAt>2024-06-02T14:30:00</addedAt>
+                        </song>
+                    </songs>
+                </album>
+            </albums>
+        </artist>
+    </artists>
+    <users>
+        <user id="1">
+            <username>sergey</username>
+            <email>sergey@mail.com</email>
+            <subscriptionType>Premium</subscriptionType>
+            <premium>true</premium>
+            <downloadLimit>3</downloadLimit>
+            <registeredAt>2024-01-10T08:00:00</registeredAt>
+        </user>
+        <user id="2">
+            <username>alex</username>
+            <email>alex@mail.com</email>
+            <subscriptionType>Basic</subscriptionType>
+            <premium>false</premium>
+            <downloadLimit>0</downloadLimit>
+            <registeredAt>2024-03-15T10:30:00</registeredAt>
+        </user>
+    </users>
+</musicService>
