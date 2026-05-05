@@ -1,12 +1,9 @@
 package com.solvd.musicstreamingservice.model;
 
-/**
- * Represents anything that can be shared.
- */
+/** Represents anything that can be shared. */
 public interface Shareable {
 
-    String getShareLink();
+  String getShareLink();
 
-    void share(User recipient);
-
+  void share(User recipient);
 }

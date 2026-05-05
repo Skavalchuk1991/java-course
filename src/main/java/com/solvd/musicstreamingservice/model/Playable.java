@@ -1,12 +1,9 @@
 package com.solvd.musicstreamingservice.model;
 
-/**
- * Represents anything that can be played.
- */
+/** Represents anything that can be played. */
 public interface Playable {
 
-    void play();
+  void play();
 
-    int getDuration();
-
+  int getDuration();
 }

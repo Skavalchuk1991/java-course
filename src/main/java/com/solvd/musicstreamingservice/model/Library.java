@@ -1,71 +1,61 @@
 package com.solvd.musicstreamingservice.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Represents user's personal media library.
- * Independent domain entity.
- */
+/** Represents user's personal media library. Independent domain entity. */
 public class Library {
 
-    private static final Logger LOGGER = LogManager.getLogger(Library.class);
+  private static final Logger LOGGER = LogManager.getLogger(Library.class);
 
-    // Owner of the library
-    private User owner;
+  // Owner of the library
+  private User owner;
 
-    // Stored media in library
-    private List<Media> mediaItems;
+  // Stored media in library
+  private List<Media> mediaItems;
 
-    /**
-     * Constructor initializes library with empty media list
-     */
-    public Library(User owner) {
-        this.owner = owner;
-        this.mediaItems = new ArrayList<>();
+  /** Constructor initializes library with empty media list */
+  public Library(User owner) {
+    this.owner = owner;
+    this.mediaItems = new ArrayList<>();
+  }
+
+  // -------- Getters --------
+
+  public User getOwner() {
+    return owner;
+  }
+
+  public List<Media> getMediaItems() {
+    return mediaItems;
+  }
+
+  // -------- Business Methods --------
+
+  /** Adds media to library. */
+  public void addMedia(Media media) {
+    mediaItems.add(media);
+  }
+
+  /** Prints library content */
+  public void printLibrary() {
+
+    LOGGER.info("Library of user: {}", owner.getUsername());
+
+    for (Media media : mediaItems) {
+      LOGGER.debug("- {}", media.getTitle());
     }
+  }
 
-    // -------- Getters --------
+  // ---------- Setters ----------
 
-    public User getOwner() {
-        return owner;
-    }
+  public void setOwner(User owner) {
+    this.owner = owner;
+  }
 
-    public List<Media> getMediaItems() {
-        return mediaItems;
-    }
-
-    // -------- Business Methods --------
-
-    /**
-     * Adds media to library.
-     */
-    public void addMedia(Media media) {
-        mediaItems.add(media);
-    }
-
-    /**
-     * Prints library content
-     */
-    public void printLibrary() {
-
-        LOGGER.info("Library of user: {}", owner.getUsername());
-
-        for (Media media : mediaItems) {
-            LOGGER.debug("- {}", media.getTitle());
-        }
-    }
-
-    // ---------- Setters ----------
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public void setMediaItems(List<Media> mediaItems) {
-        this.mediaItems = mediaItems;
-    }
+  public void setMediaItems(List<Media> mediaItems) {
+    this.mediaItems = mediaItems;
+  }
 }

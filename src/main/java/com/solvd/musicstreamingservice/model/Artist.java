@@ -1,107 +1,99 @@
 package com.solvd.musicstreamingservice.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Represents a music artist in the system.
- * This is an independent domain entity (not inherited from Media).
+ * Represents a music artist in the system. This is an independent domain entity (not inherited from
+ * Media).
  */
 public class Artist implements Reviewable {
 
-    private static final Logger LOGGER = LogManager.getLogger(Artist.class);
+  private static final Logger LOGGER = LogManager.getLogger(Artist.class);
 
-    // Artist stage or real name
-    private String name;
+  // Artist stage or real name
+  private String name;
 
-    // Country of origin
-    private String country;
+  // Country of origin
+  private String country;
 
-    // Year when artist started career
-    private int debutYear;
+  // Year when artist started career
+  private int debutYear;
 
-    // Artist's albums
-    private List<Album> albums;
+  // Artist's albums
+  private List<Album> albums;
 
-    // -------- Reviewable --------
+  // -------- Reviewable --------
 
-    private List<Review> reviews;
+  private List<Review> reviews;
 
-    /**
-     * Constructor to initialize artist fields
-     */
-    public Artist(String name, String country, int debutYear) {
-        this.name = name;
-        this.country = country;
-        this.debutYear = debutYear;
-        this.albums = new ArrayList<>();
-        this.reviews = new ArrayList<>();
-    }
+  /** Constructor to initialize artist fields */
+  public Artist(String name, String country, int debutYear) {
+    this.name = name;
+    this.country = country;
+    this.debutYear = debutYear;
+    this.albums = new ArrayList<>();
+    this.reviews = new ArrayList<>();
+  }
 
-    @Override
-    public void addReview(Review review) {
-        reviews.add(review);
-    }
+  @Override
+  public void addReview(Review review) {
+    reviews.add(review);
+  }
 
-    @Override
-    public double getAverageRating() {
-        return reviews.stream()
-                .mapToInt(Review::getRating)
-                .average()
-                .orElse(0.0);
-    }
+  @Override
+  public double getAverageRating() {
+    return reviews.stream().mapToInt(Review::getRating).average().orElse(0.0);
+  }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
+  public List<Review> getReviews() {
+    return reviews;
+  }
 
-    // ----------- Getters -----------
+  // ----------- Getters -----------
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getCountry() {
-        return country;
-    }
+  public String getCountry() {
+    return country;
+  }
 
-    public int getDebutYear() {
-        return debutYear;
-    }
+  public int getDebutYear() {
+    return debutYear;
+  }
 
-    public List<Album> getAlbums() {
-        return albums;
-    }
+  public List<Album> getAlbums() {
+    return albums;
+  }
 
-    // ----------- Setters -----------
+  // ----------- Setters -----------
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+  public void setCountry(String country) {
+    this.country = country;
+  }
 
-    public void setDebutYear(int debutYear) {
-        this.debutYear = debutYear;
-    }
+  public void setDebutYear(int debutYear) {
+    this.debutYear = debutYear;
+  }
 
-    public void setAlbums(List<Album> albums) {
-        this.albums = albums;
-    }
+  public void setAlbums(List<Album> albums) {
+    this.albums = albums;
+  }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
+  }
 
-    /**
-     * Business method – prints short info about artist
-     */
-    public void printArtistInfo() {
-        LOGGER.info("{} from {} (since {})", name, country, debutYear);
-    }
+  /** Business method – prints short info about artist */
+  public void printArtistInfo() {
+    LOGGER.info("{} from {} (since {})", name, country, debutYear);
+  }
 }

@@ -1,95 +1,88 @@
 package com.solvd.musicstreamingservice.model;
 
+import java.time.LocalDateTime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDateTime;
-
-/**
- * Represents a user review for media (song or album).
- */
+/** Represents a user review for media (song or album). */
 public class Review {
 
-    private static final Logger LOGGER = LogManager.getLogger(Review.class);
+  private static final Logger LOGGER = LogManager.getLogger(Review.class);
 
-    // User who wrote the review
-    private User user;
+  // User who wrote the review
+  private User user;
 
-    // Media that is being reviewed
-    private Media media;
+  // Media that is being reviewed
+  private Media media;
 
-    // Rating from 1 to 5
-    private int rating;
+  // Rating from 1 to 5
+  private int rating;
 
-    // Text comment
-    private String comment;
+  // Text comment
+  private String comment;
 
-    // When the review was created (LocalDateTime as required)
-    private LocalDateTime reviewedAt;
+  // When the review was created (LocalDateTime as required)
+  private LocalDateTime reviewedAt;
 
-    /**
-     * Constructor to initialize review fields
-     */
-    public Review(User user, Media media, int rating, String comment, LocalDateTime reviewedAt) {
-        this.user = user;
-        this.media = media;
-        this.rating = rating;
-        this.comment = comment;
-        this.reviewedAt = reviewedAt;
-    }
+  /** Constructor to initialize review fields */
+  public Review(User user, Media media, int rating, String comment, LocalDateTime reviewedAt) {
+    this.user = user;
+    this.media = media;
+    this.rating = rating;
+    this.comment = comment;
+    this.reviewedAt = reviewedAt;
+  }
 
-    // -------- Getters --------
+  // -------- Getters --------
 
-    public User getUser() {
-        return user;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public Media getMedia() {
-        return media;
-    }
+  public Media getMedia() {
+    return media;
+  }
 
-    public int getRating() {
-        return rating;
-    }
+  public int getRating() {
+    return rating;
+  }
 
-    public String getComment() {
-        return comment;
-    }
+  public String getComment() {
+    return comment;
+  }
 
-    public LocalDateTime getReviewedAt() {
-        return reviewedAt;
-    }
+  public LocalDateTime getReviewedAt() {
+    return reviewedAt;
+  }
 
-    // -------- Setters --------
+  // -------- Setters --------
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public void setMedia(Media media) {
-        this.media = media;
-    }
+  public void setMedia(Media media) {
+    this.media = media;
+  }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
+  public void setRating(int rating) {
+    this.rating = rating;
+  }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 
-    public void setReviewedAt(LocalDateTime reviewedAt) {
-        this.reviewedAt = reviewedAt;
-    }
+  public void setReviewedAt(LocalDateTime reviewedAt) {
+    this.reviewedAt = reviewedAt;
+  }
 
-    /**
-     * Business method – prints review information
-     */
-    public void printReview() {
-        LOGGER.info("User: {}", user.getUsername());
-        LOGGER.info("Media: {}", media.getTitle());
-        LOGGER.info("Rating: {}", rating);
-        LOGGER.info("Comment: {}", comment);
-        LOGGER.info("Reviewed at: {}", reviewedAt);
-    }
+  /** Business method – prints review information */
+  public void printReview() {
+    LOGGER.info("User: {}", user.getUsername());
+    LOGGER.info("Media: {}", media.getTitle());
+    LOGGER.info("Rating: {}", rating);
+    LOGGER.info("Comment: {}", comment);
+    LOGGER.info("Reviewed at: {}", reviewedAt);
+  }
 }

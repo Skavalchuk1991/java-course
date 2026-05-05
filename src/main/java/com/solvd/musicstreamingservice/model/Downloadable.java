@@ -1,12 +1,9 @@
 package com.solvd.musicstreamingservice.model;
 
-/**
- * Represents anything that can be downloaded.
- */
+/** Represents anything that can be downloaded. */
 public interface Downloadable {
 
-    void download();
+  void download();
 
-    boolean isAvailableOffline();
-
+  boolean isAvailableOffline();
 }
